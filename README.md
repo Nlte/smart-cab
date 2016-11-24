@@ -32,5 +32,6 @@ To run the gridsearch over hyperparameters
 $ python smartcab/agent.py gridsearch
 ```
 NOTE : The script takes about 16 min to run. 
+
 The results of each hyperparameter combinations are stored in **gridsearch_results.csv**
 
