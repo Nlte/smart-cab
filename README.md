@@ -1,18 +1,28 @@
 # Smartcab
-This project is part of the Udacity Machine Learning Nanodegree program.
-It shows how to train an automated cab with reinforcement learning.
+This project shows how to apply reinforcement learning for a self-driving agent.
+We first define the markov decision process modelizing the agent and analyze its complexity.
+Then we implement a Q-Learning algorithm for the agent. Finally we perform a gridsearch to find the optimal trade-off between learning and exploration.
+
+<img src="https://github.com/Nlte/smartcab/blob/master/screenshot.png" width="450" height="400">
 
 ## Installation
-This project requires **python 2.7** and [**PyGame**](https://www.pygame.org/wiki/GettingStarted)
+This project was implemented using **python 2.7** and the following librairies :
+
+- [pygame](https://www.pygame.org/wiki/GettingStarted)
+- [numpy](http://www.numpy.org)
+- [scikit-learn](http://scikit-learn.org/stable/)
+- [matplotlib](http://matplotlib.org)
+- [pandas](http://pandas.pydata.org)
+
 Clone the GitHub repository.
 ```sh
-$ git clone https://github.com/Nlte/smart-cab.git
-$ cd smart-cab
+$ git clone https://github.com/Nlte/smartcab.git
+$ cd smartcab
 ```
 
-## Usage
+## Run
 At the root of the repository
 ```sh
 $ python smartcab/agent.py
 ```
-This script will train an agent.
+This script will run a learning agent 
