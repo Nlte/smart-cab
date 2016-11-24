@@ -25,4 +25,12 @@ At the root of the repository
 ```sh
 $ python smartcab/agent.py
 ```
-This script will run a learning agent 
+This script will run a learning agent for 100 trials, the horizon of each trial is finite. In the pygame window, our learning agent is the red car. The simulation can be paused anytime by pressing *spacebar*. To exit the simulation, press *esc* or *ctrl+c* in the terminal.
+
+To run the gridsearch over hyperparameters
+```sh
+$ python smartcab/agent.py gridsearch
+```
+NOTE : The script takes about 16 min to run. 
+The results of each hyperparameter combinations are stored in **gridsearch_results.csv**
+
