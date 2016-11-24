@@ -154,18 +154,32 @@ def run_exhaustive():
                     f.write("epsilon {} alpha {} gamma {} avgsuccess {} avgsuccess_p {}\n" \
                         .format(epsilon, alpha, gamma, avgsuccess, avgsuccess_p))
 
+    # convert txt to csv format
+    df_list = []
+    with open('./gridsearch_results.txt') as f:
+        for line in f:
+            # parse the txt file
+            line = line.strip()
+            # split each column on whitespace
+            c = line.split()
+            col = [c[1], c[3], c[5], c[7], c[9]]
+            df_list.append(col)
+    print df_list
+    df = pd.DataFrame(df_list, columns=['epsilon', 'alpha', 'gamma', 'avgresult', 'avgresult_p'])
+    print df
+    # save dataframe in csv
+    df.to_csv('gridsearch_results.csv')
+
     d, best_parameters = parsing_results()
     print "Best parameters : {}".format(best_parameters)
 
 
 def main():
-    if sys.argv[1] == "gridsearch":
-        run_exhaustive()
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "gridsearch":
+            run_exhaustive()
     else:
         run()
 
 if __name__ == '__main__':
     main()
-    #run()
-    # Replace run() by run_exhaustive() in case of gridsearch
-    #run_exhaustive()
