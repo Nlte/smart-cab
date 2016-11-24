@@ -2,6 +2,7 @@ import random
 import collections
 import sys
 import numpy as np
+import pandas as pd
 from environment import Agent, Environment
 from planner import RoutePlanner
 from simulator import Simulator
@@ -86,7 +87,7 @@ class LearningAgent(Agent):
         print "LearningAgent.update(): deadline = {}, inputs = {}, action = {}, reward = {}".format(deadline, inputs, action, reward)  # [debug]
 
 
-def run():
+def run(update_delay=0.1, display=True):
     """Run the agent for a finite number of trials."""
 
     # Set up environment and agent
@@ -96,7 +97,7 @@ def run():
     # NOTE: You can set enforce_deadline=False while debugging to allow longer trials
 
     # Now simulate it
-    sim = Simulator(e, update_delay=0.1, display=True)  # create simulator (uses pygame when display=True, if available)
+    sim = Simulator(e, update_delay=update_delay, display=display)  # create simulator (uses pygame when display=True, if available)
     # NOTE: To speed up simulation, reduce update_delay and/or set display=False
 
     sim.run(n_trials=100)  # run for a specified number of trials
@@ -140,8 +141,9 @@ def run_exhaustive():
                 successes_p = []
                 # run() 5 times then average on success and succes_p
                 for i in range(5):
-                    epsilon, alpha, gamma, success, success_p = run()
-                    print "Simulation {} [epsilon {}, alpha {}, gamma {}] ==> success : {} success_p: {}".format(i, epsilon, alpha, gamma, success, success_p)
+                    epsilon, alpha, gamma, success, success_p = run(update_delay=0.001, display=False)
+                    print "Simulation {} [epsilon {}, alpha {}, gamma {}] ==> success : {} success_p: {}" \
+                        .format(i, epsilon, alpha, gamma, success, success_p)
                     successes.append(success)
                     successes_p.append(success_p)
                 avgsuccess = np.mean(successes)
@@ -149,13 +151,21 @@ def run_exhaustive():
 
                 filename = "./gridsearch_results.txt"
                 with open(filename, 'a') as f:
-                    f.write("epsilon {} alpha {} gamma {} avgsuccess {} avgsuccess_p {}\n".format(epsilon, alpha, gamma, avgsuccess, avgsuccess_p))
+                    f.write("epsilon {} alpha {} gamma {} avgsuccess {} avgsuccess_p {}\n" \
+                        .format(epsilon, alpha, gamma, avgsuccess, avgsuccess_p))
 
     d, best_parameters = parsing_results()
     print "Best parameters : {}".format(best_parameters)
 
 
+def main():
+    if sys.argv[1] == "gridsearch":
+        run_exhaustive()
+    else:
+        run()
+
 if __name__ == '__main__':
-    run()
+    main()
+    #run()
     # Replace run() by run_exhaustive() in case of gridsearch
     #run_exhaustive()
